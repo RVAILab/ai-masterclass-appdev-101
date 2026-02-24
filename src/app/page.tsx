@@ -384,20 +384,15 @@ const DAYS: Day[] = [
                 "You already have Git from Day 1. Now ask Claude Code to help you configure it with your name and email.",
               command: 'claude "Please help me configure Git with my name and email for commits"',
             },
-            {
-              title: "Verify configuration",
-              detail: "Check that Git is configured correctly.",
-              command: "git config --list",
-            },
           ],
         },
       },
       {
         id: "d2-github",
-        name: "GitHub Account",
+        name: "GitHub Account & CLI",
         icon: "\u{1F419}",
-        why: "GitHub is where your code lives online. You'll push your projects here, and Vercel will pull from here to deploy your apps.",
-        estimatedTime: "5 min",
+        why: "GitHub is where your code lives online. You'll push your projects here, and Vercel will pull from here to deploy your apps. The GitHub CLI makes authentication and pushing code much easier.",
+        estimatedTime: "8 min",
         steps: {
           mac: [
             {
@@ -408,9 +403,22 @@ const DAYS: Day[] = [
               linkLabel: "Sign up at GitHub \u2192",
             },
             {
-              title: "Authenticate Git with GitHub",
+              title: "Install GitHub CLI",
               detail:
-                "When you push code for the first time, Git will ask you to authenticate. The easiest way is via HTTPS with a personal access token. We'll walk through this together in class.",
+                "Ask Claude Code to install the GitHub CLI (gh) using Homebrew. This makes authentication and working with GitHub much easier.",
+              command: 'claude "Please install the GitHub CLI (gh) using Homebrew"',
+            },
+            {
+              title: "Authenticate with GitHub",
+              detail:
+                "Run gh auth login and follow the prompts. Choose HTTPS protocol, authenticate with your browser, and you're done!",
+              command: "gh auth login",
+            },
+            {
+              title: "Verify authentication",
+              detail:
+                "Check that you're properly authenticated by viewing your account status.",
+              command: "gh auth status",
             },
           ],
           windows: [
@@ -422,9 +430,22 @@ const DAYS: Day[] = [
               linkLabel: "Sign up at GitHub \u2192",
             },
             {
-              title: "Authenticate Git with GitHub",
+              title: "Install GitHub CLI",
               detail:
-                "When you push code for the first time, Git will ask you to authenticate. The easiest way is via HTTPS with a personal access token. We'll walk through this together in class.",
+                "Use WinGet to install the GitHub CLI. This is the simplest method for Windows.",
+              command: 'winget install GitHub.cli',
+            },
+            {
+              title: "Authenticate with GitHub",
+              detail:
+                "In Git Bash, run gh auth login and follow the prompts. Choose HTTPS protocol, authenticate with your browser.",
+              command: "gh auth login",
+            },
+            {
+              title: "Verify authentication",
+              detail:
+                "Check that you're properly authenticated by viewing your account status.",
+              command: "gh auth status",
             },
           ],
         },
