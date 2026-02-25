@@ -1,0 +1,136 @@
+@import '../styles/base.scss';
+
+.nav {
+  background: linear-gradient(to bottom, $color-background-secondary, $color-background);
+  border-bottom: 1px solid $color-border;
+  position: sticky;
+  top: 0;
+  z-index: $z-nav;
+  backdrop-filter: blur(10px);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.logo {
+  opacity: 0.95;
+  transition: opacity $transition-base;
+  object-fit: contain;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 32px;
+  background: $color-border;
+  margin: 0 $spacing-md;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  line-height: $line-height-tight;
+}
+
+.brandSubtitle {
+  font-size: $font-size-xs;
+  color: $color-success;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.links {
+  display: flex;
+  gap: $spacing-sm;
+  align-items: center;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-lg;
+  text-decoration: none;
+  color: $color-text-muted;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  transition: all $transition-base;
+  position: relative;
+
+  &:hover {
+    background: $color-hover-bg;
+    color: $color-text-secondary;
+  }
+
+  &.active {
+    background: rgba($color-primary, 0.1);
+    color: $color-primary;
+    border: 1px solid rgba($color-primary, 0.2);
+    
+    &:hover {
+      background: rgba($color-primary, 0.15);
+    }
+  }
+}
+
+.navIcon {
+  font-size: $font-size-md;
+  display: flex;
+  align-items: center;
+}
+
+.navLabel {
+  display: inline-block;
+  
+  @include responsive('sm') {
+    display: none;
+  }
+}
+
+@include responsive('sm') {
+  .container {
+    padding: 0 $spacing-md;
+    height: 56px;
+  }
+
+  .brandSubtitle {
+    display: none;
+  }
+
+  .navLink {
+    padding: $spacing-sm $spacing-md;
+  }
+}

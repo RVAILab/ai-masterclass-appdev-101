@@ -1,0 +1,65 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-top: 1rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1rem;
+  text-align: left;
+  transition: all 0.3s ease;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  &:hover {
+    border-color: rgba(124, 106, 239, 0.5);
+    transform: scale(1.02);
+  }
+}
+
+.emoji {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.term {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.short {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 0.25rem;
+}
+
+.hint {
+  font-size: 0.625rem;
+  color: var(--accent);
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.flippedTerm {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.detail {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.625;
+}

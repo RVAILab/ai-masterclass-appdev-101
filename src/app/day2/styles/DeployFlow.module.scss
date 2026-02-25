@@ -1,0 +1,172 @@
+.container {
+  margin-top: 1rem;
+}
+
+.stepIndicators {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.stepButton {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  background: var(--surface);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  cursor: pointer;
+
+  &:hover {
+    border-color: rgba(124, 106, 239, 0.3);
+  }
+
+  &.active {
+    background: rgba(124, 106, 239, 0.2);
+    color: var(--accent);
+    border-color: rgba(124, 106, 239, 0.3);
+  }
+}
+
+.content {
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1.5rem;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  line-height: 1.625;
+  margin-bottom: 1rem;
+}
+
+.visual {
+  // Visual content styles are handled inline within the component
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+}
+
+.navButton {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--accent);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
+
+.nextButton {
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--pink);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
+
+// Visual component styles
+.visualContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  
+  // Global color utilities
+  :global(.text-accent) {
+    color: var(--accent);
+  }
+  
+  :global(.text-green) {
+    color: var(--green);
+  }
+  
+  :global(.text-orange) {
+    color: var(--orange);
+  }
+}
+
+.visualColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.visualBox {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.75rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.visualLabel {
+  font-size: 0.625rem;
+  color: var(--text-dim);
+}
+
+.visualArrow {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.visualCommand {
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.urlDisplay {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.125rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  color: var(--green);
+}
+
+.urlDescription {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}

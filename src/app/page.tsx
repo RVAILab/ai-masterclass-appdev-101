@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import Navigation from "@/components/Navigation";
+import { colors, fonts, spacing, radii, styles } from "@/styles/shared";
 
 /* ──────────────────────────────────────────────
    TYPES
@@ -190,7 +193,7 @@ const DAYS: Day[] = [
               title: "Install Claude Code via Homebrew",
               detail:
                 "Since you already have Homebrew installed from Phase 2, this is the simplest method.",
-              command: "brew install claude-code",
+              command: "brew install --cask claude-code",
             },
             {
               title: "Alternative: curl installer",
@@ -433,7 +436,7 @@ const DAYS: Day[] = [
               title: "Install GitHub CLI",
               detail:
                 "Use WinGet to install the GitHub CLI. This is the simplest method for Windows.",
-              command: 'winget install GitHub.cli',
+              command: 'winget install --id GitHub.cli',
             },
             {
               title: "Authenticate with GitHub",
@@ -727,20 +730,7 @@ function CopyButton({ text }: { text: string }) {
           setTimeout(() => setCopied(false), 2000);
         }
       }}
-      style={{
-        position: "absolute",
-        top: 8,
-        right: 8,
-        background: copied ? "#2d6a4f" : "rgba(255,255,255,0.06)",
-        border: "1px solid rgba(255,255,255,0.1)",
-        color: copied ? "#b7e4c7" : "#adb5bd",
-        borderRadius: 6,
-        padding: "4px 10px",
-        fontSize: 11,
-        cursor: "pointer",
-        fontFamily: "inherit",
-        transition: "all 0.2s",
-      }}
+      style={copied ? { ...styles.copyButton, ...styles.copyButtonCopied } : styles.copyButton}
     >
       {copied ? "Copied \u2713" : "Copy"}
     </button>
@@ -749,29 +739,11 @@ function CopyButton({ text }: { text: string }) {
 
 function CommandBlock({ command }: { command: string }) {
   return (
-    <div
-      style={{
-        position: "relative",
-        background: "#111827",
-        borderRadius: 10,
-        padding: "14px 16px",
-        paddingRight: 70,
-        marginTop: 10,
-        border: "1px solid rgba(255,255,255,0.06)",
-        fontFamily:
-          "var(--font-jetbrains-mono), 'SF Mono', 'Fira Code', monospace",
-        fontSize: 12.5,
-        lineHeight: 1.75,
-        color: "#e0e0e0",
-        overflowX: "auto",
-        whiteSpace: "pre-wrap",
-        wordBreak: "break-all",
-      }}
-    >
+    <div style={styles.codeBlock}>
       <CopyButton text={command} />
       {command.split("\n").map((line, i) => (
         <div key={i}>
-          <span style={{ color: "#4b5563", userSelect: "none" }}>$ </span>
+          <span style={{ color: colors.textDimmed, userSelect: "none" }}>$ </span>
           <span>{line}</span>
         </div>
       ))}
@@ -780,35 +752,10 @@ function CommandBlock({ command }: { command: string }) {
 }
 
 function TagBadge({ tag }: { tag: string }) {
-  const styles: Record<string, { bg: string; color: string; label: string }> = {
-    optional: {
-      bg: "rgba(255,255,255,0.04)",
-      color: "#6c757d",
-      label: "Optional",
-    },
-    fallback: {
-      bg: "rgba(255,212,59,0.08)",
-      color: "#ffd43b",
-      label: "Fallback",
-    },
-  };
-  const s = styles[tag] || styles.optional;
+  const badgeStyles = tag === "fallback" ? styles.fallbackBadge : styles.optionalBadge;
   return (
-    <span
-      style={{
-        fontSize: 10,
-        fontWeight: 700,
-        letterSpacing: "0.06em",
-        textTransform: "uppercase",
-        background: s.bg,
-        color: s.color,
-        padding: "2px 7px",
-        borderRadius: 4,
-        marginLeft: 8,
-        verticalAlign: "middle",
-      }}
-    >
-      {s.label}
+    <span style={{ ...styles.badge, ...badgeStyles }}>
+      {tag === "fallback" ? "Fallback" : "Optional"}
     </span>
   );
 }
@@ -827,59 +774,18 @@ function StepItem({
   return (
     <div
       onClick={onToggle}
-      style={{
-        display: "flex",
-        gap: 12,
-        padding: "14px 16px",
-        background: checked
-          ? "rgba(45, 106, 79, 0.06)"
-          : "rgba(255,255,255,0.015)",
-        borderRadius: 10,
-        cursor: "pointer",
-        border: checked
-          ? "1px solid rgba(45, 106, 79, 0.2)"
-          : "1px solid rgba(255,255,255,0.04)",
-        transition: "all 0.2s ease",
-        marginBottom: 6,
-      }}
+      style={checked ? { ...styles.stepItem, ...styles.stepItemChecked } : styles.stepItem}
     >
-      <div
-        style={{
-          width: 22,
-          height: 22,
-          minWidth: 22,
-          borderRadius: 6,
-          border: checked
-            ? "2px solid #40916c"
-            : "2px solid rgba(255,255,255,0.12)",
-          background: checked ? "#2d6a4f" : "transparent",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: 1,
-          transition: "all 0.15s ease",
-          fontSize: 12,
-          color: "#fff",
-        }}
-      >
+      <div style={checked ? { ...styles.checkbox, ...styles.checkboxChecked } : styles.checkbox}>
         {checked && "\u2713"}
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div
-          style={{
-            fontWeight: 600,
-            fontSize: 13.5,
-            color: checked ? "#6c757d" : "#e9ecef",
-            textDecoration: checked ? "line-through" : "none",
-            transition: "all 0.15s",
-            marginBottom: 3,
-          }}
-        >
+        <div style={checked ? { ...styles.stepTitle, ...styles.stepTitleChecked } : styles.stepTitle}>
           <span
             style={{
-              color: "#4b5563",
+              color: colors.textDimmed,
               fontWeight: 400,
-              marginRight: 6,
+              marginRight: spacing.sm,
               fontSize: 12,
             }}
           >
@@ -888,7 +794,7 @@ function StepItem({
           {step.title}
           {step.tag && <TagBadge tag={step.tag} />}
         </div>
-        <div style={{ fontSize: 13, color: "#868e96", lineHeight: 1.5 }}>
+        <div style={styles.stepDetail}>
           {step.detail}
         </div>
         {step.link && (
@@ -897,16 +803,7 @@ function StepItem({
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            style={{
-              display: "inline-block",
-              marginTop: 8,
-              fontSize: 13,
-              color: "#74c0fc",
-              textDecoration: "none",
-              fontWeight: 500,
-              borderBottom: "1px solid rgba(116,192,252,0.25)",
-              paddingBottom: 1,
-            }}
+            style={styles.stepLink}
           >
             {step.linkLabel}
           </a>
@@ -1169,27 +1066,11 @@ export default function SetupGuide() {
   const completedDays = DAYS.filter(day => dayProgress(day).pct === 100).length;
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#0a0e14",
-        color: "#e9ecef",
-        fontFamily:
-          "var(--font-dm-sans), 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif",
-      }}
-    >
+    <div style={styles.pageWrapper}>
+      <Navigation />
+      
       {/* HEADER */}
-      <div
-        style={{
-          background:
-            "linear-gradient(170deg, #0a0e14 0%, #111827 40%, #0a0e14 100%)",
-          borderBottom: "1px solid rgba(255,255,255,0.04)",
-          padding: "52px 24px 44px",
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
+      <div style={styles.header}>
         <div
           style={{
             position: "absolute",
@@ -1216,7 +1097,7 @@ export default function SetupGuide() {
               marginBottom: 16,
             }}
           >
-            White Rabbit {"\u00B7"} AI 101 Workshop
+            White Rabbit {"\u00B7"} AI Masterclass - App Dev 101
           </div>
           <h1
             style={{
@@ -1239,12 +1120,9 @@ export default function SetupGuide() {
               margin: "0 auto",
             }}
           >
-            Everything you need, organized by workshop day.
+            Everything you need for the AI Masterclass, organized by day.
             <br />
-            <span style={{ color: "#74c0fc" }}>
-              Complete Day 1 before arriving
-            </span>{" "}
-            &mdash; the rest we&apos;ll do together.
+            We&apos;ll work through the installations together during class.
           </p>
         </div>
       </div>
@@ -1423,6 +1301,28 @@ export default function SetupGuide() {
                     >
                       Day {day.day}: {day.title}
                     </span>
+                    {day.day === 2 && (
+                      <Link
+                        href="/day2"
+                        style={{
+                          fontSize: 11,
+                          padding: "4px 10px",
+                          background: day.accent + "15",
+                          color: day.accent,
+                          borderRadius: 6,
+                          border: `1px solid ${day.accent}30`,
+                          textDecoration: "none",
+                          fontWeight: 600,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 4,
+                          transition: "all 0.2s ease",
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        View Presentation →
+                      </Link>
+                    )}
                   </div>
                   <div
                     style={{ fontSize: 12.5, color: "#4b5563", marginTop: 2 }}

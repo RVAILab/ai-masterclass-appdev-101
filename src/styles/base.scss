@@ -1,0 +1,200 @@
+// Base colors
+$color-background: #0a0e14;
+$color-background-secondary: #111827;
+$color-text-primary: #f1f3f5;
+$color-text-secondary: #e9ecef;
+$color-text-muted: #868e96;
+$color-text-dimmed: #6c757d;
+$color-text-faint: #4b5563;
+
+// Brand colors
+$color-primary: #74c0fc;
+$color-secondary: #b197fc;
+$color-accent: #ffd43b;
+$color-success: #51cf66;
+$color-warning: #ffd43b;
+$color-error: #ff8787;
+
+// Semantic colors
+$color-link: $color-primary;
+$color-link-hover: lighten($color-primary, 10%);
+$color-border: rgba(255, 255, 255, 0.06);
+$color-border-light: rgba(255, 255, 255, 0.04);
+$color-border-heavy: rgba(255, 255, 255, 0.1);
+
+// Success state colors
+$color-success-bg: rgba(45, 106, 79, 0.06);
+$color-success-border: rgba(45, 106, 79, 0.2);
+$color-success-dark: #2d6a4f;
+$color-success-medium: #40916c;
+
+// Interactive colors
+$color-hover-bg: rgba(255, 255, 255, 0.04);
+$color-active-bg: rgba(255, 255, 255, 0.07);
+$color-focus-ring: rgba(116, 192, 252, 0.4);
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-2xl: 40px;
+$spacing-3xl: 48px;
+
+// Typography
+$font-family-sans: var(--font-dm-sans), 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-family-mono: var(--font-jetbrains-mono), 'SF Mono', 'Fira Code', monospace;
+
+$font-size-xs: 11px;
+$font-size-sm: 13px;
+$font-size-base: 14px;
+$font-size-md: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+$font-size-2xl: 32px;
+$font-size-3xl: 48px;
+
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-heavy: 800;
+
+$line-height-tight: 1.1;
+$line-height-snug: 1.3;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.6;
+$line-height-loose: 1.75;
+
+// Border radius
+$radius-sm: 4px;
+$radius-md: 6px;
+$radius-lg: 8px;
+$radius-xl: 10px;
+$radius-2xl: 12px;
+$radius-3xl: 14px;
+$radius-round: 50%;
+
+// Breakpoints
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+
+// Z-index layers
+$z-base: 1;
+$z-dropdown: 10;
+$z-sticky: 20;
+$z-modal-backdrop: 90;
+$z-modal: 100;
+$z-nav: 100;
+$z-tooltip: 110;
+
+// Transitions
+$transition-fast: 0.15s ease;
+$transition-base: 0.2s ease;
+$transition-slow: 0.3s ease;
+
+// Shadows
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+$shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
+$shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.4);
+
+// Mixins
+@mixin gradient-text($gradient) {
+  background: $gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@mixin hover-lift {
+  transition: transform $transition-base, box-shadow $transition-base;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+}
+
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 2px solid $color-focus-ring;
+    outline-offset: 2px;
+  }
+}
+
+@mixin glass-effect {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: 1px solid $color-border;
+}
+
+@mixin responsive($breakpoint) {
+  @if $breakpoint == 'sm' {
+    @media (max-width: $breakpoint-sm) {
+      @content;
+    }
+  } @else if $breakpoint == 'md' {
+    @media (max-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == 'lg' {
+    @media (max-width: $breakpoint-lg) {
+      @content;
+    }
+  } @else if $breakpoint == 'xl' {
+    @media (max-width: $breakpoint-xl) {
+      @content;
+    }
+  }
+}
+
+// Common component classes
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+  
+  @include responsive('sm') {
+    padding: 0 $spacing-md;
+  }
+}
+
+.title-gradient {
+  @include gradient-text(linear-gradient(135deg, $color-primary 0%, $color-secondary 50%, $color-accent 100%));
+}
+
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  background: rgba($color-primary, 0.1);
+  border: 1px solid rgba($color-primary, 0.3);
+  border-radius: $radius-lg;
+  color: $color-primary;
+  font-weight: $font-weight-semibold;
+  text-decoration: none;
+  transition: all $transition-base;
+  cursor: pointer;
+  
+  @include focus-ring;
+  
+  &:hover {
+    background: rgba($color-primary, 0.15);
+    border-color: rgba($color-primary, 0.4);
+  }
+}
+
+.section {
+  margin-bottom: $spacing-2xl;
+}
+
+.section-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-md;
+}
