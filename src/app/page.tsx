@@ -1031,7 +1031,7 @@ export default function SetupGuide() {
   });
   const [sessionId] = useState<string>(() => getSessionId());
   const [syncStatus, setSyncStatus] = useState<"idle" | "syncing" | "synced" | "error">("idle");
-  const syncTimeout = useRef<NodeJS.Timeout>();
+  const syncTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const saveProgress = useCallback(async () => {
     if (!sessionId) return;
