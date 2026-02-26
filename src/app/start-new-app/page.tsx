@@ -347,7 +347,7 @@ export default function StartNewAppPage() {
                   fontStyle: "italic",
                   lineHeight: 1.4
                 }}>
-                  "{app.prompt}"
+                  &ldquo;{app.prompt}&rdquo;
                 </p>
               </div>
             ))}

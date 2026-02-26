@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
-import { colors, fonts, spacing, radii, styles } from "@/styles/shared";
+import { colors, spacing, styles } from "@/styles/shared";
+import { getSessionId } from "@/lib/session";
 
 /* ──────────────────────────────────────────────
    TYPES
@@ -1028,6 +1029,67 @@ export default function SetupGuide() {
     day3: true,
     day4: true,
   });
+  const [sessionId] = useState<string>(() => getSessionId());
+  const [syncStatus, setSyncStatus] = useState<"idle" | "syncing" | "synced" | "error">("idle");
+  const syncTimeout = useRef<NodeJS.Timeout>();
+
+  const saveProgress = useCallback(async () => {
+    if (!sessionId) return;
+    setSyncStatus("syncing");
+    try {
+      const response = await fetch('/api/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId, progress: checkedSteps }),
+      });
+      
+      if (response.ok) {
+        setSyncStatus("synced");
+        setTimeout(() => setSyncStatus("idle"), 2000);
+      } else {
+        setSyncStatus("error");
+        setTimeout(() => setSyncStatus("idle"), 3000);
+      }
+    } catch (error) {
+      console.error('Failed to save progress:', error);
+      setSyncStatus("error");
+      setTimeout(() => setSyncStatus("idle"), 3000);
+    }
+  }, [sessionId, checkedSteps]);
+
+  // Load progress on mount
+  useEffect(() => {
+    if (!sessionId) return;
+
+    const loadProgress = async () => {
+      try {
+        const response = await fetch(`/api/progress?sessionId=${sessionId}`);
+        const data = await response.json();
+        if (data.progress && Object.keys(data.progress).length > 0) {
+          setCheckedSteps(data.progress);
+        }
+      } catch (error) {
+        console.error('Failed to load progress:', error);
+      }
+    };
+
+    loadProgress();
+  }, [sessionId]);
+
+  // Save progress to database when checkedSteps changes
+  useEffect(() => {
+    if (sessionId && Object.keys(checkedSteps).length > 0) {
+      // Clear existing timeout
+      if (syncTimeout.current) {
+        clearTimeout(syncTimeout.current);
+      }
+      
+      // Debounce the save operation
+      syncTimeout.current = setTimeout(() => {
+        saveProgress();
+      }, 1000);
+    }
+  }, [checkedSteps, sessionId, saveProgress]);
 
   const toggleStep = (key: string) =>
     setCheckedSteps((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -1068,6 +1130,53 @@ export default function SetupGuide() {
   return (
     <div style={styles.pageWrapper}>
       <Navigation />
+      
+      {/* SYNC STATUS */}
+      {syncStatus !== "idle" && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: 20,
+            right: 20,
+            padding: "8px 14px",
+            borderRadius: 8,
+            fontSize: 12,
+            fontWeight: 500,
+            zIndex: 1000,
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            background: syncStatus === "syncing" ? "rgba(116,192,252,0.1)" :
+                       syncStatus === "synced" ? "rgba(82,183,136,0.1)" :
+                       "rgba(255,135,135,0.1)",
+            border: `1px solid ${syncStatus === "syncing" ? "rgba(116,192,252,0.3)" :
+                                syncStatus === "synced" ? "rgba(82,183,136,0.3)" :
+                                "rgba(255,135,135,0.3)"}`,
+            color: syncStatus === "syncing" ? "#74c0fc" :
+                   syncStatus === "synced" ? "#52b788" :
+                   "#ff8787",
+          }}
+        >
+          {syncStatus === "syncing" && (
+            <>
+              <span style={{ animation: "spin 1s linear infinite" }}>↻</span>
+              Saving progress...
+            </>
+          )}
+          {syncStatus === "synced" && (
+            <>
+              <span>✓</span>
+              Progress saved
+            </>
+          )}
+          {syncStatus === "error" && (
+            <>
+              <span>⚠</span>
+              Save failed (local only)
+            </>
+          )}
+        </div>
+      )}
       
       {/* HEADER */}
       <div style={styles.header}>
@@ -1304,6 +1413,28 @@ export default function SetupGuide() {
                     {day.day === 2 && (
                       <Link
                         href="/day2"
+                        style={{
+                          fontSize: 11,
+                          padding: "4px 10px",
+                          background: day.accent + "15",
+                          color: day.accent,
+                          borderRadius: 6,
+                          border: `1px solid ${day.accent}30`,
+                          textDecoration: "none",
+                          fontWeight: 600,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 4,
+                          transition: "all 0.2s ease",
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        View Presentation →
+                      </Link>
+                    )}
+                    {day.day === 3 && (
+                      <Link
+                        href="/day3"
                         style={{
                           fontSize: 11,
                           padding: "4px 10px",
