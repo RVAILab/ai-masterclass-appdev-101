@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { SlideShell } from "./components/SlideShell";
 import { Terminal, InteractiveTerminal } from "./components/Terminal";
 import { GitFlow } from "./components/GitFlow";
@@ -12,7 +13,17 @@ import styles from "./styles/presentation.module.scss";
 function TitleSlide() {
   return (
     <div style={{ textAlign: 'center' }}>
-      <div className={`${styles.dayBadge} ${styles.animateFadeInUp}`}>
+      <div className={`${styles.animateFadeInUp}`} style={{ marginBottom: '1.5rem' }}>
+        <Image 
+          src="/white-rabbit-logo.png" 
+          alt="White Rabbit Logo" 
+          width={200} 
+          height={85}
+          style={{ objectFit: 'contain' }}
+          priority
+        />
+      </div>
+      <div className={`${styles.dayBadge} ${styles.animateFadeInUp} ${styles.stagger1}`}>
         Day 2 of 4
       </div>
       <h1 style={{
@@ -21,7 +32,7 @@ function TitleSlide() {
         letterSpacing: '-0.02em',
         lineHeight: 1.1,
         marginBottom: '1rem'
-      }} className={`${styles.animateFadeInUp} ${styles.stagger1}`}>
+      }} className={`${styles.animateFadeInUp} ${styles.stagger2}`}>
         Version Control,{" "}
         <span className={styles.titleGradient}>
           GitHub
@@ -36,7 +47,16 @@ function TitleSlide() {
         fontSize: '1.125rem',
         maxWidth: '28rem',
         margin: '0 auto'
-      }} className={`${styles.animateFadeInUp} ${styles.stagger2}`}>
+      }} className={`${styles.animateFadeInUp} ${styles.stagger3}`}>
+        AI 101: Build Your Own App with Claude
+      </p>
+      <p style={{
+        color: 'var(--text-dim)',
+        fontSize: '1rem',
+        maxWidth: '28rem',
+        margin: '0.5rem auto 0 auto',
+        opacity: 0.8
+      }} className={`${styles.animateFadeInUp} ${styles.stagger3}`}>
         Take your app from your laptop to the world
       </p>
       <div style={{
@@ -47,7 +67,7 @@ function TitleSlide() {
         gap: '1.5rem',
         fontSize: '0.875rem',
         color: 'var(--text-dim)'
-      }} className={`${styles.animateFadeInUp} ${styles.stagger3}`}>
+      }} className={`${styles.animateFadeInUp} ${styles.stagger4}`}>
         <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <kbd style={{
             padding: '0.125rem 0.5rem',
