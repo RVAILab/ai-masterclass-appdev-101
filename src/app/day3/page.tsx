@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { SlideShell } from "../day2/components/SlideShell";
-import { Terminal, InteractiveTerminal } from "../day2/components/Terminal";
+import { InteractiveTerminal } from "../day2/components/Terminal";
 import { ConceptCards } from "../day2/components/ConceptCard";
 import styles from "../day2/styles/presentation.module.scss";
 
@@ -102,7 +102,7 @@ function GoalsSlide() {
       <div className={`${styles.animateFadeInUp} ${styles.stagger2}`}>
         {[
           { icon: "🗄️", text: "Understand what databases are and why your app needs one", color: "var(--accent)" },
-          { icon: "🐘", text: "Learn SQL basics and relational database concepts", color: "var(--pink)" },
+          { icon: "🏗️", text: "Learn about data types and database structure", color: "var(--pink)" },
           { icon: "🔗", text: "Connect your Next.js app to a Postgres database on Vercel", color: "var(--green)" },
           { icon: "💾", text: "Store and retrieve real data that persists", color: "var(--orange)" },
         ].map((goal) => (
@@ -125,34 +125,35 @@ function WhatIsADatabaseSlide() {
       <h2 className={`${styles.slideTitle} ${styles.animateFadeInUp} ${styles.stagger1}`}>
         Why Do Apps Need Databases?
       </h2>
-      <div className={`${styles.comparisonGrid} ${styles.animateFadeInUp} ${styles.stagger2}`}>
-        <div className={styles.comparisonCard}>
-          <div className={styles.cardIcon}>🧠</div>
-          <h4 className={`${styles.cardTitle} ${styles.negative}`}>Without a Database</h4>
-          <div className={styles.cardContent}>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              <li style={{ marginBottom: '0.5rem' }}>❌ Refresh page = everything resets</li>
-              <li style={{ marginBottom: '0.5rem' }}>❌ Can&rsquo;t have user accounts</li>
-              <li style={{ marginBottom: '0.5rem' }}>❌ No saved preferences or history</li>
-              <li style={{ marginBottom: '0.5rem' }}>❌ Data only exists in memory</li>
-            </ul>
-            <p style={{ marginTop: '1rem' }}>Your app is like a whiteboard — write something, erase it, it&rsquo;s gone forever.</p>
-          </div>
-        </div>
-        <div className={`${styles.comparisonCard} ${styles.highlighted}`}>
-          <div className={styles.cardIcon}>💾</div>
-          <h4 className={`${styles.cardTitle} ${styles.positive}`}>With a Database</h4>
-          <div className={styles.cardContent}>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              <li style={{ marginBottom: '0.5rem' }}>✅ Data persists between sessions</li>
-              <li style={{ marginBottom: '0.5rem' }}>✅ Multiple users can have accounts</li>
-              <li style={{ marginBottom: '0.5rem' }}>✅ Track history, scores, settings</li>
-              <li style={{ marginBottom: '0.5rem' }}>✅ Enable collaboration & sharing</li>
-              <li style={{ marginBottom: '0.5rem' }}>✅ Scale to millions of users</li>
-            </ul>
-            <p style={{ marginTop: '1rem' }}>Your app becomes a <strong>living system</strong> — data flows between users, builds over time, and creates real value.</p>
-          </div>
-        </div>
+      <p className={`${styles.textSmall} ${styles.animateFadeInUp} ${styles.stagger2}`}>
+        Click to compare
+      </p>
+      <div className={`${styles.animateFadeInUp} ${styles.stagger3}`}>
+        <ConceptCards
+          concepts={[
+            {
+              term: "Without Database",
+              emoji: "🧠",
+              short: "Like a whiteboard",
+              detail: "• Refresh page = everything resets\n• Can't have user accounts\n• No saved preferences or history\n• Data only exists in memory while page is open",
+              color: "var(--pink)",
+            },
+            {
+              term: "With Database",
+              emoji: "💾",
+              short: "Like a filing cabinet",
+              detail: "• Data persists between sessions\n• Multiple users can have accounts\n• Track history, scores, settings\n• Enable collaboration & sharing\n• Scale to millions of users",
+              color: "var(--green)",
+            },
+            {
+              term: "Real Examples",
+              emoji: "🌟",
+              short: "What databases enable",
+              detail: "• User profiles that remember you\n• Shopping carts that persist\n• Message history in chat apps\n• Friend lists in social apps\n• Scores in games\n• Everything that makes apps useful!",
+              color: "var(--blue)",
+            },
+          ]}
+        />
       </div>
     </div>
   );
@@ -167,39 +168,46 @@ function DatabaseTypesSlide() {
       <h2 className={`${styles.slideTitle} ${styles.animateFadeInUp} ${styles.stagger1}`}>
         Different Kinds of Databases
       </h2>
-      <div style={{ display: 'grid', gap: '1.5rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }} className={`${styles.animateFadeInUp} ${styles.stagger2}`}>
-        <div className={`${styles.featureCard} ${styles.textCenter}`}>
-          <div className={styles.featureIcon}>🗂️</div>
-          <h4 className={styles.featureTitle}>SQL/Relational</h4>
-          <p className={styles.featureDescription}>
-            Tables with rows and columns, like spreadsheets. Most common type. Examples: Postgres, MySQL, SQLite
-          </p>
-        </div>
-        <div className={`${styles.featureCard} ${styles.textCenter}`}>
-          <div className={styles.featureIcon}>📄</div>
-          <h4 className={styles.featureTitle}>NoSQL/Document</h4>
-          <p className={styles.featureDescription}>
-            Stores data as flexible documents. Good for unstructured data. Examples: MongoDB, Firebase
-          </p>
-        </div>
-        <div className={`${styles.featureCard} ${styles.textCenter}`}>
-          <div className={styles.featureIcon}>🕸️</div>
-          <h4 className={styles.featureTitle}>Graph</h4>
-          <p className={styles.featureDescription}>
-            Stores relationships between things. Perfect for social networks, recommendations. Examples: Neo4j, Amazon Neptune
-          </p>
-        </div>
-        <div className={`${styles.featureCard} ${styles.textCenter}`}>
-          <div className={styles.featureIcon}>🔑</div>
-          <h4 className={styles.featureTitle}>Key-Value</h4>
-          <p className={styles.featureDescription}>
-            Simple pairs of keys and values. Super fast for caching. Examples: Redis, DynamoDB
-          </p>
-        </div>
+      <p className={`${styles.textSmall} ${styles.animateFadeInUp} ${styles.stagger2}`}>
+        Click any card to learn more
+      </p>
+      <div className={`${styles.animateFadeInUp} ${styles.stagger3}`}>
+        <ConceptCards
+          concepts={[
+            {
+              term: "SQL/Relational",
+              emoji: "🗂️",
+              short: "Tables with rows and columns",
+              detail: "• Like spreadsheets that talk to each other\n• Most common type worldwide\n• Examples: Postgres, MySQL, SQLite\n• Great for structured data with relationships",
+              color: "var(--green)",
+            },
+            {
+              term: "NoSQL/Document",
+              emoji: "📄",
+              short: "Flexible document storage",
+              detail: "• Stores data as JSON-like documents\n• No strict schema required\n• Examples: MongoDB, Firebase\n• Good for rapidly changing data structures",
+              color: "var(--blue)",
+            },
+            {
+              term: "Graph",
+              emoji: "🕸️",
+              short: "All about relationships",
+              detail: "• Stores connections between things\n• Perfect for social networks, recommendations\n• Great for fraud detection\n• Examples: Neo4j, Amazon Neptune",
+              color: "var(--orange)",
+            },
+            {
+              term: "Key-Value",
+              emoji: "🔑",
+              short: "Simple and super fast",
+              detail: "• Just pairs of keys and values\n• Lightning fast for caching, sessions\n• Simple lookups and storage\n• Examples: Redis, DynamoDB, Memcached",
+              color: "var(--pink)",
+            },
+          ]}
+        />
       </div>
-      <div className={`${styles.textCenter} ${styles.animateFadeInUp} ${styles.stagger3}`} style={{ marginTop: '1.5rem' }}>
+      <div className={`${styles.textCenter} ${styles.animateFadeInUp} ${styles.stagger4}`} style={{ marginTop: '1.5rem' }}>
         <p className={styles.textSmall}>
-          Today we&rsquo;ll focus on <strong className="text-text">SQL/Relational databases</strong> — they&rsquo;re the most common and what Vercel provides.
+          Today we&rsquo;ll focus on <strong className="text-text">SQL/Relational</strong> — most common and what Vercel provides.
         </p>
       </div>
     </div>
@@ -313,60 +321,66 @@ function DatabaseConceptsSlide() {
   );
 }
 
-function SQLBasicsSlide() {
+function ColumnTypesSlide() {
   return (
     <div>
       <h3 className={`${styles.slideHeader} ${styles.animateFadeInUp}`}>
-        SQL Commands
+        Data Types
       </h3>
       <h2 className={`${styles.slideTitle} ${styles.animateFadeInUp} ${styles.stagger1}`}>
-        The 4 Basic Operations
+        Common Column Types
       </h2>
-      <div className={`${styles.animateFadeInUp} ${styles.stagger2}`}>
-        <Terminal
-          title="SELECT - Read data"
-          lines={[
-            { prompt: true, text: "-- Get all users" },
-            { prompt: false, text: "SELECT * FROM users;" },
-            { text: "" },
-            { prompt: true, text: "-- Get specific columns" },
-            { prompt: false, text: "SELECT name, email FROM users;" },
-            { text: "" },
-            { prompt: true, text: "-- Filter with WHERE" },
-            { prompt: false, text: "SELECT * FROM users WHERE age > 25;" },
-          ]}
-        />
-        <Terminal
-          title="INSERT - Add data"
-          lines={[
-            { prompt: true, text: "-- Add a new user" },
-            { prompt: false, text: "INSERT INTO users (name, email, age)" },
-            { prompt: false, text: "VALUES ('Alice', 'alice@example.com', 28);" },
-          ]}
-        />
-        <Terminal
-          title="UPDATE - Change data"
-          lines={[
-            { prompt: true, text: "-- Update a user's email" },
-            { prompt: false, text: "UPDATE users" },
-            { prompt: false, text: "SET email = 'newemail@example.com'" },
-            { prompt: false, text: "WHERE id = 1;" },
-          ]}
-        />
-        <Terminal
-          title="DELETE - Remove data"
-          lines={[
-            { prompt: true, text: "-- Delete a user" },
-            { prompt: false, text: "DELETE FROM users WHERE id = 1;" },
-            { text: "" },
-            { prompt: true, text: "-- Delete all old records" },
-            { prompt: false, text: "DELETE FROM users WHERE created_at < '2023-01-01';" },
+      <p className={`${styles.textSmall} ${styles.animateFadeInUp} ${styles.stagger2}`}>
+        Click any card to see details
+      </p>
+      <div className={`${styles.animateFadeInUp} ${styles.stagger3}`}>
+        <ConceptCards
+          concepts={[
+            {
+              term: "TEXT",
+              emoji: "📝",
+              short: "Words & sentences",
+              detail: "• VARCHAR(n) for short text like names, emails\n• TEXT for long content like descriptions, blog posts\n• CHAR(n) for fixed-length codes\n• Perfect for user input and content",
+              color: "var(--green)",
+            },
+            {
+              term: "NUMBERS",
+              emoji: "🔢",
+              short: "Counting & calculating",
+              detail: "• INTEGER for whole numbers (IDs, quantities)\n• SERIAL for auto-incrementing IDs\n• DECIMAL for precise money values\n• Use the right size for your data",
+              color: "var(--blue)",
+            },
+            {
+              term: "DATES",
+              emoji: "📅",
+              short: "When things happen",
+              detail: "• TIMESTAMP for exact moments (created_at, updated_at)\n• DATE for birthdays, deadlines\n• TIME for schedules\n• Always store in UTC when possible",
+              color: "var(--orange)",
+            },
+            {
+              term: "BOOLEAN",
+              emoji: "✅",
+              short: "True or false",
+              detail: "• Perfect for flags: is_active, is_admin, is_published\n• Simple yes/no questions\n• Takes minimal storage space\n• Easy to query and filter",
+              color: "var(--pink)",
+            },
+            {
+              term: "JSON",
+              emoji: "📦",
+              short: "Flexible structured data",
+              detail: "• Store complex objects, settings, metadata\n• Great for data that doesn't fit a rigid structure\n• PostgreSQL has excellent JSON support\n• Can query inside JSON fields",
+              color: "var(--accent)",
+            },
+            {
+              term: "UUID",
+              emoji: "🆔",
+              short: "Global unique IDs",
+              detail: "• Better than auto-incrementing IDs for distributed systems\n• Impossible to guess, safe for public URLs\n• Slightly larger than integers\n• Great for security and scalability",
+              color: "var(--text)",
+            },
           ]}
         />
       </div>
-      <p className={`${styles.textCenter} ${styles.textSmall} ${styles.animateFadeInUp} ${styles.stagger3}`} style={{ marginTop: '1rem' }}>
-        <strong className="text-text">Good news:</strong> Claude Code writes SQL for you! Just describe what data you want.
-      </p>
     </div>
   );
 }
@@ -411,6 +425,54 @@ function DatabaseHostingSlide() {
       <div className={`${styles.textCenter} ${styles.animateFadeInUp} ${styles.stagger3}`} style={{ marginTop: '1.5rem' }}>
         <p className={styles.textSmall}>
           Today we&rsquo;ll use <strong className="text-text">Neon Postgres</strong> through Vercel — a cloud database that&rsquo;s free to start.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function BlobStorageSlide() {
+  return (
+    <div>
+      <h3 className={`${styles.slideHeader} ${styles.animateFadeInUp}`}>
+        Beyond Text & Numbers
+      </h3>
+      <h2 className={`${styles.slideTitle} ${styles.animateFadeInUp} ${styles.stagger1}`}>
+        Blob Storage for Files
+      </h2>
+      <p className={`${styles.textSmall} ${styles.animateFadeInUp} ${styles.stagger2}`}>
+        Click cards to learn about each storage type
+      </p>
+      <div className={`${styles.animateFadeInUp} ${styles.stagger3}`}>
+        <ConceptCards
+          concepts={[
+            {
+              term: "Database",
+              emoji: "🗄️",
+              short: "Structured data",
+              detail: "• Perfect for user accounts, post content, settings\n• Fast queries, transactions, relationships\n• Great for numbers, text, dates\n• Not designed for large files",
+              color: "var(--green)",
+            },
+            {
+              term: "Blob Storage",
+              emoji: "📁", 
+              short: "Files & media",
+              detail: "• For profile photos, PDFs, videos, audio, images\n• Optimized for large files\n• Store file → get URL → save URL in database\n• Unlimited file sizes and types",
+              color: "var(--blue)",
+            },
+            {
+              term: "Working Together",
+              emoji: "🔗",
+              short: "Best of both worlds",
+              detail: "• Database stores metadata (filename, size, type)\n• Database also stores the file URL\n• Blob storage holds the actual file\n• Fast queries + unlimited file sizes",
+              color: "var(--accent)",
+            },
+          ]}
+        />
+      </div>
+      <div className={`${styles.textCenter} ${styles.animateFadeInUp} ${styles.stagger4}`} style={{ marginTop: '1.5rem' }}>
+        <p className={styles.textSmall}>
+          Vercel provides both <strong className="text-text">Postgres databases</strong> and <strong className="text-text">blob storage</strong> that work together seamlessly.
         </p>
       </div>
     </div>
@@ -575,44 +637,44 @@ function SchemaExampleSlide() {
   return (
     <div>
       <h3 className={`${styles.slideHeader} ${styles.animateFadeInUp}`}>
-        Example Schema
+        Real Example
       </h3>
       <h2 className={`${styles.slideTitle} ${styles.animateFadeInUp} ${styles.stagger1}`}>
-        A Simple Guestbook Database
+        A Blog Database Schema
       </h2>
-      <div className={`${styles.animateFadeInUp} ${styles.stagger2}`}>
-        <Terminal
-          title="Create a messages table"
-          lines={[
-            { prompt: false, text: "CREATE TABLE messages (" },
-            { prompt: false, text: "  id SERIAL PRIMARY KEY," },
-            { prompt: false, text: "  name VARCHAR(100) NOT NULL," },
-            { prompt: false, text: "  message TEXT NOT NULL," },
-            { prompt: false, text: "  created_at TIMESTAMP DEFAULT NOW()" },
-            { prompt: false, text: ");" },
+      <p className={`${styles.textSmall} ${styles.animateFadeInUp} ${styles.stagger2}`}>
+        Click each table to see its structure
+      </p>
+      <div className={`${styles.animateFadeInUp} ${styles.stagger3}`}>
+        <ConceptCards
+          concepts={[
+            {
+              term: "users",
+              emoji: "👤",
+              short: "People who use the blog",
+              detail: "• id: SERIAL (unique ID)\n• username: VARCHAR(50)\n• email: VARCHAR(255)\n• is_admin: BOOLEAN\n• created_at: TIMESTAMP\n• Sample: 1, 'alice', 'alice@email.com', false, 2024-01-15",
+              color: "var(--green)",
+            },
+            {
+              term: "posts",
+              emoji: "📝",
+              short: "Blog articles and content",
+              detail: "• id: SERIAL (unique ID)\n• title: VARCHAR(200)\n• content: TEXT\n• author_id: INTEGER (links to users.id)\n• view_count: INTEGER\n• published: BOOLEAN\n• created_at: TIMESTAMP",
+              color: "var(--blue)",
+            },
+            {
+              term: "Relationships",
+              emoji: "🔗",
+              short: "How tables connect",
+              detail: "• author_id in posts table references id in users table\n• This means each post belongs to a user\n• One user can have many posts\n• This is called a one-to-many relationship",
+              color: "var(--accent)",
+            },
           ]}
         />
-        <div className={`${styles.commitPushGrid} ${styles.mt4}`}>
-          <div className={styles.commitCard}>
-            <h4 className={styles.cardTitle}>Column Types</h4>
-            <ul className={styles.cardList}>
-              <li className="flex items-start gap-2"><span className="text-green mt-0.5">→</span> <strong>SERIAL:</strong> Auto-incrementing number</li>
-              <li className="flex items-start gap-2"><span className="text-green mt-0.5">→</span> <strong>VARCHAR(n):</strong> Text up to n characters</li>
-              <li className="flex items-start gap-2"><span className="text-green mt-0.5">→</span> <strong>TEXT:</strong> Unlimited text</li>
-              <li className="flex items-start gap-2"><span className="text-green mt-0.5">→</span> <strong>TIMESTAMP:</strong> Date and time</li>
-            </ul>
-          </div>
-          <div className={styles.pushCard}>
-            <h4 className={styles.cardTitle}>Constraints</h4>
-            <ul className={styles.cardList}>
-              <li className="flex items-start gap-2"><span className="text-blue mt-0.5">→</span> <strong>PRIMARY KEY:</strong> Unique identifier</li>
-              <li className="flex items-start gap-2"><span className="text-blue mt-0.5">→</span> <strong>NOT NULL:</strong> Must have a value</li>
-              <li className="flex items-start gap-2"><span className="text-blue mt-0.5">→</span> <strong>DEFAULT:</strong> Auto-fill if not provided</li>
-              <li className="flex items-start gap-2"><span className="text-blue mt-0.5">→</span> <strong>UNIQUE:</strong> No duplicates allowed</li>
-            </ul>
-          </div>
-        </div>
       </div>
+      <p className={`${styles.textCenter} ${styles.textSmall} ${styles.animateFadeInUp} ${styles.stagger4}`} style={{ marginTop: '1rem' }}>
+        This is how real apps store data — connected tables that reference each other.
+      </p>
     </div>
   );
 }
@@ -720,8 +782,9 @@ export default function Presentation() {
     <DatabaseTypesSlide key="db-types" />,
     <SQLPronunciationSlide key="sql-pronunciation" />,
     <DatabaseConceptsSlide key="db-concepts" />,
-    <SQLBasicsSlide key="sql-basics" />,
+    <ColumnTypesSlide key="column-types" />,
     <DatabaseHostingSlide key="db-hosting" />,
+    <BlobStorageSlide key="blob-storage" />,
     <NeonVercelSlide key="neon-vercel" />,
     <SetupDatabaseSlide key="setup-db" />,
     <ConnectDatabaseSlide key="connect-db" />,

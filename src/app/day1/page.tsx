@@ -363,7 +363,7 @@ function GoalsSlide() {
       </h2>
       <div className={`${styles.animateFadeInUp} ${styles.stagger2}`}>
         {[
-          { icon: "🛠️", text: "Get comfortable with Claude Desktop, Claude Code, Cursor, and the terminal", color: "var(--accent)" },
+          { icon: "🛠️", text: "Getting started with Claude Code", color: "var(--accent)" },
           { icon: "📁", text: "Understand what a project looks like on your filesystem", color: "var(--pink)" },
           { icon: "🚀", text: "Plan, build, and run your first Next.js app", color: "var(--green)" },
           { icon: "🔄", text: "Learn the core debugging loop", color: "var(--orange)" },
